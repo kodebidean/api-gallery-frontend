@@ -1,5 +1,6 @@
-import { Box, Container, Typography, Paper, Divider } from '@mui/material';
+import { Box, Container, Typography, Paper, Divider, Button } from '@mui/material';
 import PropTypes from 'prop-types';
+import ArticleIcon from '@mui/icons-material/Article';
 
 const EndpointDocs = ({ method, endpoint, description, params, response }) => (
     <Box sx={{ mb: 4 }}>
@@ -82,16 +83,31 @@ const DocsPage = () => {
                         border: '1px solid #30363D'
                     }}
                 >
-                    <Typography 
-                        variant="h4" 
-                        gutterBottom 
-                        sx={{ 
-                            color: '#E6EDF3',
-                            mb: 3
-                        }}
-                    >
-                        Documentación de la API
-                    </Typography>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 4 }}>
+                        <Typography 
+                            variant="h4" 
+                            sx={{ 
+                                color: '#E6EDF3'
+                            }}
+                        >
+                            Documentación de la API
+                        </Typography>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            href="https://documenter.getpostman.com/view/40683149/2sAYdfqB6G"
+                            target="_blank"
+                            startIcon={<ArticleIcon />}
+                            sx={{
+                                backgroundColor: '#238636',
+                                '&:hover': {
+                                    backgroundColor: '#2ea043'
+                                }
+                            }}
+                        >
+                            Ver en Postman
+                        </Button>
+                    </Box>
 
                     <Typography sx={{ mb: 4 }}>
                         Esta API permite gestionar una galería de imágenes. Todos los endpoints están bajo la URL base: 
