@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
-const API_URL = 'http://localhost:9090/api/images';
+// Cambia esta URL por la de Railway
+const API_URL = 'https://splendid-renewal-production.up.railway.app/api/images';
 
 // Funciones base de API
 const api = {
