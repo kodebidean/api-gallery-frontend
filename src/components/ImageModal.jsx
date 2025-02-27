@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { 
     Dialog, 
     DialogContent, 
@@ -15,7 +16,7 @@ const ImageModal = ({ open, onClose, image }) => {
         <Dialog 
             open={open} 
             onClose={onClose}
-            maxWidth="md"
+            maxWidth="sm"
             fullWidth
         >
             <DialogTitle>
@@ -33,8 +34,8 @@ const ImageModal = ({ open, onClose, image }) => {
                         alt={image.name}
                         style={{
                             maxWidth: '100%',
-                            maxHeight: '70vh',
-                            objectFit: 'contain'
+                            maxHeight: '30vh',
+                            objectFit:""
                         }}
                     />
                     {image.description && (
@@ -56,6 +57,17 @@ const ImageModal = ({ open, onClose, image }) => {
             </DialogContent>
         </Dialog>
     );
+};
+
+ImageModal.propTypes = {
+    open: PropTypes.bool.isRequired,
+    onClose: PropTypes.func.isRequired,
+    image: PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        url: PropTypes.string.isRequired,
+        description: PropTypes.string,
+        createdAt: PropTypes.string.isRequired
+    })
 };
 
 export default ImageModal; 

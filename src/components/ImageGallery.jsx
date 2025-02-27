@@ -1,17 +1,14 @@
-import { useState } from 'react';
-import { Box, Grid, Typography, CircularProgress } from '@mui/material';
+import PropTypes from 'prop-types';
+import { Box, Typography, CircularProgress } from '@mui/material';
 import { useImages } from '../services/imageService';
 import ImageCard from './ImageCard';
-import UploadForm from './UploadForm';
-import SearchBar from './SearchBar';
 
-const ImageGallery = () => {
-    const [searchTerm, setSearchTerm] = useState('');
+const ImageGallery = ({ searchTerm }) => {
     const { data: images, isLoading, error } = useImages();
 
     if (isLoading) {
         return (
-            <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
+            <Box display="flex" justifyContent="center" alignItems="center" minHeight="60vh">
                 <CircularProgress />
             </Box>
         );
@@ -19,39 +16,56 @@ const ImageGallery = () => {
 
     if (error) {
         return (
-            <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
+            <Box display="flex" justifyContent="center" alignItems="center" minHeight="60vh">
                 <Typography color="error">Error al cargar las imágenes: {error.message}</Typography>
             </Box>
         );
     }
 
     const filteredImages = images?.filter(image => 
-        image.name.toLowerCase().includes(searchTerm.toLowerCase())
+        image.name.toLowerCase().includes(searchTerm?.toLowerCase() || '')
     ) || [];
 
-    return (
-        <Box sx={{ p: 3 }}>
-            <Typography variant="h4" gutterBottom>
-                Galería de Imágenes
-            </Typography>
-            
-            <Box sx={{ mb: 3 }}>
-                <SearchBar value={searchTerm} onChange={setSearchTerm} />
+    if (filteredImages.length === 0) {
+        return (
+            <Box display="flex" justifyContent="center" alignItems="center" minHeight="60vh">
+                <Typography variant="h6" color="text.secondary">
+                    No se encontraron imágenes
+                </Typography>
             </Box>
-            
-            <Box sx={{ mb: 3 }}>
-                <UploadForm />
-            </Box>
+        );
+    }
 
-            <Grid container spacing={3}>
-                {filteredImages.map((image) => (
-                    <Grid item xs={12} sm={6} md={4} lg={3} key={image.id}>
-                        <ImageCard image={image} />
-                    </Grid>
-                ))}
-            </Grid>
+    return (
+        <Box sx={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: 3,
+            width: '100%',
+            p: 2
+        }}>
+            {filteredImages.map((image) => (
+                <Box 
+                    key={image.id}
+                    sx={{
+                        flexGrow: 1,
+                        flexBasis: {
+                            xs: '100%',
+                            sm: 'calc(50% - 24px)',
+                            md: 'calc(33.333% - 24px)',
+                            lg: 'calc(25% - 24px)'
+                        }
+                    }}
+                >
+                    <ImageCard image={image} />
+                </Box>
+            ))}
         </Box>
     );
+};
+
+ImageGallery.propTypes = {
+    searchTerm: PropTypes.string
 };
 
 export default ImageGallery; 

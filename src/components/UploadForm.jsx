@@ -51,14 +51,14 @@ const UploadForm = () => {
             setDescription('');
             setPreview('');
         } catch (error) {
-            toast.error('Error al subir la imagen');
+            toast.error(error.message || 'Error al subir la imagen');
         }
     };
 
     return (
         <Paper sx={{ p: 3, mb: 3 }}>
             <form onSubmit={handleSubmit}>
-                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                <Box sx={{ display: 'flex', width: '100%', flexDirection: 'column', gap: 2 }}>
                     <Typography variant="h6">Subir Nueva Imagen</Typography>
                     
                     <Button
@@ -76,11 +76,12 @@ const UploadForm = () => {
                     </Button>
 
                     {preview && (
-                        <Box sx={{ mt: 2 }}>
+                        <Box sx={{ mt: 2, display: 'flex', justifyContent: 'center' }}>
                             <img 
                                 src={preview} 
                                 alt="Preview" 
                                 style={{ 
+                                    mx: 'auto',
                                     maxWidth: '200px', 
                                     maxHeight: '200px',
                                     objectFit: 'contain' 
@@ -88,7 +89,6 @@ const UploadForm = () => {
                             />
                         </Box>
                     )}
-
                     <TextField
                         multiline
                         rows={3}
